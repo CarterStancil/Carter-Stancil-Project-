@@ -1,28 +1,9 @@
 """
-producer_case.py
 
-Stream JSON data to any combination of sinks:
-- File (JSONL)
-- Kafka topic
-- SQLite database
-- DuckDB database
+producer_stancil.py
 
-Each sink has its own one-line *emitter function* you can call inside the loop.
-Comment out the ones you don't want.
-
-Example JSON message
-{
-    "message": "I just shared a meme! It was amazing.",
-    "author": "Charlie",
-    "timestamp": "2025-01-29 14:35:20",
-    "category": "humor",
-    "sentiment": 0.87,
-    "keyword_mentioned": "meme",
-    "message_length": 42
-}
-
-Environment variables are in utils/utils_config module.
 """
+
 
 #####################################
 # Import Modules
