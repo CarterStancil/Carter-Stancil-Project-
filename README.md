@@ -6,7 +6,7 @@ My custom producer file reads the NBA Data CSV file and separates them by NBA Se
 
 ## Custom Consumer 
 
-My custom consumer connects to an SQlite data base to store the messages sent by the producer. This makes it much easier to read for the user. This consumer is different from other projects as I use this solely for seeing the season and the amount of fouls called. When I enhance this project and create more columns, it'll have more use. 
+My custom consumer connects to an SQlite database to store the messages sent by the producer. This makes it much easier to read for the user. This consumer is different from other projects as I use this solely for seeing the season and the amount of fouls called. When I enhance this project and create more columns, it'll have more use. 
 
 ## Custom Analyzer 
 
