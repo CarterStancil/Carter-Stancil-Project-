@@ -1,17 +1,111 @@
 # Carter-Stancil-Project
 
-## Custom Producer 
+## Repository Structure
+Carter-Stancil-Project/
+├── producers/
+│   └── producer.py
+├── consumers/
+│   └── consumer.py
+├── data/
+│   └── (input CSV or dataset files)
+├── analyzer.py
+├── main.py
+├── delete_db.py
+├── requirements.txt
+├── LICENSE.txt
+└── README.md
 
-My custom producer file reads the NBA Data CSV file and separates them by NBA Season (Excluding any other league). It then aggregates the total amount of fouls called for that season. After separating by season and accumulating the number of fouls called, it produces a message of the season and the total fouls. 
+## File Summary
 
-## Custom Consumer 
+- producers/producer.py – Reads NBA data, groups by season, and computes total fouls, rebounds, blocks, and steals. Emits these results as messages or events.
+- consumers/consumer.py – Receives messages from the producer and writes the results into an SQLite database.
+- analyzer.py – Loads stored data and generates line charts showing per-season trends in fouls, rebounds, blocks, and steals.
+- main.py – Orchestrates the pipeline by running producer and consumer concurrently, then triggering the analyzer once data ingestion is complete.
+- delete_db.py – Utility for deleting or resetting the SQLite database before a new run.
+- requirements.txt – Lists Python dependencies.
+- LICENSE.txt – Project license (MIT).
 
-My custom consumer connects to an SQlite data base to store the messages sent by the producer. This makes it much easier to read for the user. This consumer is different from other projects as I use this solely for seeing the season and the amount of fouls called. When I enhance this project and create more columns, it'll have more use. 
+## Installation and Setup
+Prerequisites
+Python 3.8+
+Recommended: virtual environment (venv or conda)
 
-## Custom Analyzer 
+All dependencies listed in requirements.txt
 
-My custom analyzer gets the data from the SQLite database and starts plotting. This file plots a line chart of the season on the X axis, and the total amount of fouls called on the Y axis. This makes it easy to see significant drops or increases in fouls called season by season. 
+## Installation Steps
 
-## Main File 
+### Clone the repository
 
-My custom main file brings the whole project together. I recently learning the module "threading", which allows my producer and consumer to run at the same time. This is the reason why I am able to see both the Producer and Consumer messages in the same terminal. Once my producer and consumer files are finished, I start the analyzer file, which generates the chart for further analysis. 
+git clone https://github.com/CarterStancil/Carter-Stancil-Project-.git
+cd Carter-Stancil-Project-
+
+### Set up a virtual environment (optional)
+
+python -m venv venv
+source venv/bin/activate     # macOS/Linux
+venv\Scripts\activate        # Windows
+
+### Install dependencies
+
+pip install -r requirements.txt
+
+### (Optional) Reset database
+
+python delete_db.py
+
+### Run the full pipeline
+
+python main.py
+
+## How It Works
+
+### Producer
+
+- Reads NBA data from a CSV file.
+- Groups records by season.
+- Calculates total fouls, rebounds, blocks, and steals for each season.
+- Sends aggregated data to the consumer.
+
+### Consumer
+
+- Listens for messages from the producer.
+- Stores the received season-level statistics in an SQLite database.
+
+### Analyzer
+
+- Reads data from the database.
+- Produces line charts comparing how fouls, rebounds, blocks, and steals change across seasons.
+- Optionally saves the plots as image files or displays them interactively.
+
+### Main
+
+- Launches the producer and consumer (often in separate threads).
+- Waits for both to complete, then runs the analyzer automatically.
+
+Example Output
+
+After running main.py, the analyzer will generate charts with:
+
+- X-axis: NBA Seasons (e.g. 2017–2018, 2018–2019, etc.)
+- Y-axis: Totals for fouls, rebounds, blocks, and steals.
+
+Each metric will appear as a separate line, allowing quick comparison of performance trends over time.
+
+## Extending the Project
+
+Potential areas for improvement:
+
+- Add more advanced statistics (e.g., assists, turnovers, points per game).
+- Break down metrics by team or player.
+- Use a real-time message broker (Kafka, RabbitMQ) for streaming data.
+- Expand analyzer visuals with interactive dashboards (Plotly, Dash).
+- Introduce automated testing and logging for production readiness.
+
+## Dependencies
+
+Listed in requirements.txt. Typical dependencies include:
+
+- pandas – for data loading and aggregation
+- matplotlib – for visualization
+- sqlite3 (built-in) – for local database storage
+- threading (built-in) – for concurrent producer/consumer execution
