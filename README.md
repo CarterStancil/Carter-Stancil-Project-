@@ -1,20 +1,5 @@
 # Carter-Stancil-Project
 
-## Repository Structure
-Carter-Stancil-Project/
-├── producers/
-│   └── producer.py
-├── consumers/
-│   └── consumer.py
-├── data/
-│   └── (input CSV or dataset files)
-├── analyzer.py
-├── main.py
-├── delete_db.py
-├── requirements.txt
-├── LICENSE.txt
-└── README.md
-
 ## File Summary
 
 - producers/producer.py – Reads NBA data, groups by season, and computes total fouls, rebounds, blocks, and steals. Emits these results as messages or events.
