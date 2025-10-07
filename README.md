@@ -21,13 +21,13 @@ All dependencies listed in requirements.txt
 
 ### Clone the repository
 
-git clone https://github.com/CarterStancil/Carter-Stancil-Project-.git
+git clone https://github.com/CarterStancil/Carter-Stancil-Project-.git <br>
 cd Carter-Stancil-Project-
 
 ### Set up a virtual environment (optional)
 
-python -m venv venv
-source venv/bin/activate     # macOS/Linux
+python -m venv venv <br> 
+source venv/bin/activate     # macOS/Linux <br>
 venv\Scripts\activate        # Windows
 
 ### Install dependencies
