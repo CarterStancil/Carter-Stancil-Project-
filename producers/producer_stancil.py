@@ -14,9 +14,8 @@ import time
 from collections import defaultdict
 
 def producer(file_path, q, delay=0.1, stop_signal="__STOP__"):
-    fouls_per_season = defaultdict(int)
+    stats_per_season = defaultdict(lambda: {"fouls": 0, "rebounds": 0, "steals": 0, "blocks": 0})
 
-    
     with open(file_path, "r") as f:
         reader = csv.DictReader(f)
         for row in reader:
@@ -24,17 +23,30 @@ def producer(file_path, q, delay=0.1, stop_signal="__STOP__"):
                 continue
 
             season = row["Season"].strip()
+
             try:
                 fouls = int(row["PF"])
+                rebounds = int(row["REB"])
+                steals = int(row["STL"])
+                blocks = int(row["BLK"])
             except ValueError:
-                fouls = 0
-            fouls_per_season[season] += fouls
+                fouls = rebounds = steals = blocks = 0
 
-   
-    for season, total_fouls in fouls_per_season.items():
-        message = {"season": season, "fouls": total_fouls}
+            stats_per_season[season]["fouls"] += fouls
+            stats_per_season[season]["rebounds"] += rebounds
+            stats_per_season[season]["steals"] += steals
+            stats_per_season[season]["blocks"] += blocks
+
+    for season, totals in stats_per_season.items():
+        message = {
+            "season": season,
+            "fouls": totals["fouls"],
+            "rebounds": totals["rebounds"],
+            "steals": totals["steals"],
+            "blocks": totals["blocks"],
+        }
         q.put(message)
         print(f"[Producer] Produced: {message}")
         time.sleep(delay)
 
-    q.put(stop_signal)  
+    q.put(stop_signal)
